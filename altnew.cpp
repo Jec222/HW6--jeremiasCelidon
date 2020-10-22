@@ -1,4 +1,4 @@
-#include <new>
+/*#include <new>
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
@@ -58,3 +58,4 @@ int bytes_allocated()
 {
     return bytes;
 }
+*/
