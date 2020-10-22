@@ -14,7 +14,6 @@ struct Record {
 
 int main() {
     
-
   Dlist<Record*> catsweb; //records are big, so store pointer
 
   Record* p = new Record;
