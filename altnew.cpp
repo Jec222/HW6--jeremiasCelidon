@@ -1,4 +1,4 @@
-/*#include <new>
+#include <new>
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
@@ -29,7 +29,7 @@ void *operator new(size_t n)
     return p->result;
 }
 
-void operator delete(void *p)
+void operator delete (void *p) noexcept
 {
     // Null check
     if (!p) return;
@@ -58,4 +58,3 @@ int bytes_allocated()
 {
     return bytes;
 }
-*/
