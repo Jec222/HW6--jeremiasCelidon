@@ -187,6 +187,7 @@ void Dlist<T>::RemoveAll(){
     first = first->next;
     temp->next = NULL;
     delete temp;
+  }
 }
 template <typename T>
 void Dlist<T>::CopyAll(const Dlist &l){
