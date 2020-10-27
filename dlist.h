@@ -166,7 +166,7 @@ Dlist<T>::Dlist(const Dlist &l){
   CopyAll(l);
 } 
 template <typename T>               
-Dlist<T>::Dlist&operator=(const Dlist &l){
+Dlist<T>&::Dlist operator=(const Dlist &l){
   RemoveAll();
   CopyAll(l);
   return this;  
