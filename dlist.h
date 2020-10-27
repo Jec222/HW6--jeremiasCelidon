@@ -129,7 +129,7 @@ T Dlist<T>::RemoveFront(){
   if (first == last) {
     RemoveAll();
     MakeEmpty();
-    return;
+    //return;
   }
   else{
     node *temp = first;
