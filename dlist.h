@@ -183,7 +183,7 @@ template <typename T>
 void Dlist<T>::RemoveAll(){
   while (first) {
     node *temp = first;
-    first = head->next;
+    first = first->next;
     temp->next = NULL;
     delete temp;
 }
