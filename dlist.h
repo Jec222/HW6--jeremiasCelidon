@@ -184,8 +184,12 @@ void Dlist<T>::RemoveAll(){
 }
 template <typename T>
 void Dlist<T>::CopyAll(const Dlist &l){
-  first = l.first;
-  delete l.first;
+  node* temp = l.first -> next;
+
+  while(temp != nullptr){
+    InsertBack(temp -> o);
+    temp = temp -> next;
+  }
 }
 
 
