@@ -122,7 +122,6 @@ void Dlist<T>::InsertBack(const T &o){
 }
 template <typename T>
 T Dlist<T>::RemoveFront(){
-
   if (first == NULL)
     MakeEmpty();
 
@@ -147,7 +146,7 @@ T Dlist<T>::RemoveBack(){
   if (first == last){
     RemoveAll();
     MakeEmpty();
-    return;
+    //return;
   }
   else{
     node *temp = last;
