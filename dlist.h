@@ -141,7 +141,7 @@ T Dlist<T>::RemoveFront(){
 template <typename T>
 T Dlist<T>::RemoveBack(){
   if (first) {
-    Node *oldNode = last;
+    node *oldNode = last;
     last = last->prev;
     last->next = nullptr;
     delete oldNode;
