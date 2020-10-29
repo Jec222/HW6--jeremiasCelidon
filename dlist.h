@@ -135,13 +135,16 @@ template <typename T>
 T Dlist<T>::RemoveBack(){
   if (!IsEmpty()){
     node* temp = last;
-
-    if (first == last)
-      head = nullptr;
-
     T delValue = temp-> o;
-    first -> next nullptr;
-    last = last -> prev;
+
+    if (first == last){
+      first = nullptr;
+      last = nullptr;
+    }
+    else {
+      last = last -> prev;
+      last -> next = nullptr;
+    }
     delete temp; 
     return delValue;
   }
