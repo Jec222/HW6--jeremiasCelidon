@@ -116,28 +116,40 @@ T Dlist<T>::RemoveFront(){
 
   if (!IsEmpty()){
     node* temp = first;
-
-    if(first == last)
-      last = nullptr;
-
     T delValue = temp -> o;
-    first = first -> next;
+
+    if(first == last){
+      last = nullptr;
+      first = nullptr;
+    }
+    else {
+      first = first -> next;
+      first -> prev = nullptr;
+
+    }
     delete temp;
     return delValue;
   }
 }
 template <typename T>
 T Dlist<T>::RemoveBack(){
-  if (first) {
-    node *oldNode = last;
-    last = last->prev;
-    last->next = nullptr;
-    delete oldNode;
+  if (!IsEmpty()){
+    node* temp = last;
+
+    if (first == last)
+      head = nullptr;
+
+    T delValue = temp-> o;
+    first -> next nullptr;
+    last = last -> prev;
+    delete temp; 
+    return delValue;
   }
+  return 0;
 }
 template <typename T>
 Dlist<T>::Dlist(){
-  MakeEmpty();
+  first = last = nullptr;
 }       
 template <typename T>                 
 Dlist<T>::Dlist(const Dlist &l){
@@ -147,8 +159,7 @@ template <typename T>
 Dlist<T>& Dlist<T>::operator= (const Dlist &l){      
 //Dlist&<T>::Dlist operator=(const Dlist &l){
   RemoveAll();
-  CopyAll(l);
-  //return this;  
+  CopyAll(l); 
 } 
 template <typename T>        
 Dlist<T>::~Dlist(){
