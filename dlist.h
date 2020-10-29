@@ -169,7 +169,7 @@ Dlist<T>& Dlist<T>::operator= (const Dlist &l){
 //Dlist&<T>::Dlist operator=(const Dlist &l){
   RemoveAll();
   CopyAll(l);
-  return this;  
+  //return this;  
 } 
 template <typename T>        
 Dlist<T>::~Dlist(){
