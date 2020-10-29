@@ -83,59 +83,47 @@ bool Dlist<T>::IsEmpty() const{
 template <typename T>
 void Dlist<T>::InsertFront(const T &o){
    // if list is empty
-  if (first == nullptr && last == nullptr) {
-    first = new node;
-    first -> o = 0;
-    first -> next = first -> prev = nullptr;
-    last = first;
-    return;
+   node* temp = new node;
+   temp -> o = o;
+
+  if (first == nullptr) {
+    first = last = temp;
   }
-  // else
   else{
-    node *newNode = new node;
-    newNode -> o = o;
-    newNode -> prev = nullptr;
-    newNode -> next = first;
-    first -> prev = newNode;
-    first = newNode;
+    first -> prev = temp;
+    temp -> next = first;
+    first = temp; 
   }
 }
 template <typename T>
 void Dlist<T>::InsertBack(const T &o){
 
-  if (first == nullptr && last == nullptr){
-    first = new node;
-    first -> o = 0;
-    first -> next = first -> prev = nullptr;
-    last = first;
-    return;
+  node* temp = new node;
+  temp -> o = o;
+
+  if (last == nullptr){
+    first = last = temp;
   }
 
   else{
-    node *newNode = new node;
-    newNode -> o = o;
-    newNode -> next = nullptr;
-    newNode -> prev = last;
-    last -> next = newNode;
-    last = newNode;
+    last->next = temp;
+    temp->prev = last;
+    last = temp;
   }
 }
 template <typename T>
 T Dlist<T>::RemoveFront(){
-  if (first == nullptr)
-    MakeEmpty();
 
-  if (first == last) {
-    RemoveAll();
-    MakeEmpty();
-    //return;
-  }
-  else{
-    node *temp = first;
+  if (!IsEmpty()){
+    node* temp = first;
+
+    if(first == last)
+      last = nullptr;
+
+    T delValue = temp -> o;
     first = first -> next;
-    first -> prev = nullptr;
-    temp -> next = nullptr;
     delete temp;
+    return delValue;
   }
 }
 template <typename T>
