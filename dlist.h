@@ -148,7 +148,6 @@ T Dlist<T>::RemoveBack(){
     delete temp; 
     return delValue;
   }
-  return 0;
 }
 template <typename T>
 Dlist<T>::Dlist(){
