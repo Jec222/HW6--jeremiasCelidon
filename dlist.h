@@ -78,15 +78,15 @@ class Dlist {
  ***************************************/
 template <typename T>
 bool Dlist<T>::IsEmpty() const{
-   return (first == NULL && last == NULL);
+   return (first == nullptr && last == nullptr);
 }
 template <typename T>
 void Dlist<T>::InsertFront(const T &o){
    // if list is empty
-  if (first == NULL && last == NULL) {
+  if (first == nullptr && last == nullptr) {
     first = new node;
     first -> o = 0;
-    first -> next = first -> prev = NULL;
+    first -> next = first -> prev = nullptr;
     last = first;
     return;
   }
@@ -94,7 +94,7 @@ void Dlist<T>::InsertFront(const T &o){
   else{
     node *newNode = new node;
     newNode -> o = o;
-    newNode -> prev = NULL;
+    newNode -> prev = nullptr;
     newNode -> next = first;
     first -> prev = newNode;
     first = newNode;
@@ -103,10 +103,10 @@ void Dlist<T>::InsertFront(const T &o){
 template <typename T>
 void Dlist<T>::InsertBack(const T &o){
 
-  if (first == NULL && last == NULL){
+  if (first == nullptr && last == nullptr){
     first = new node;
     first -> o = 0;
-    first -> next = first -> prev = NULL;
+    first -> next = first -> prev = nullptr;
     last = first;
     return;
   }
@@ -114,7 +114,7 @@ void Dlist<T>::InsertBack(const T &o){
   else{
     node *newNode = new node;
     newNode -> o = o;
-    newNode -> next = NULL;
+    newNode -> next = nullptr;
     newNode -> prev = last;
     last -> next = newNode;
     last = newNode;
@@ -122,7 +122,7 @@ void Dlist<T>::InsertBack(const T &o){
 }
 template <typename T>
 T Dlist<T>::RemoveFront(){
-  if (first == NULL)
+  if (first == nullptr)
     MakeEmpty();
 
   if (first == last) {
@@ -168,14 +168,14 @@ Dlist<T>::~Dlist(){
 }
 template <typename T>
 void Dlist<T>::MakeEmpty(){
-  first = last = NULL;
+  first = last = nullptr;
 }
 template <typename T>
 void Dlist<T>::RemoveAll(){
   while (first) {
     node *temp = first;
     first = first->next;
-    temp->next = NULL;
+    temp->next = nullptr;
     delete temp;
   }
 }
