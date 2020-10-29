@@ -173,12 +173,14 @@ void Dlist<T>::MakeEmpty(){
 }
 template <typename T>
 void Dlist<T>::RemoveAll(){
-  while (first) {
-    node *temp = first;
-    first = first->next;
-    temp->next = nullptr;
+
+  node *temp = first;
+  while (temp! = nullptr) {
+    first = first -> next;
     delete temp;
+    temp = first;
   }
+  first = nullptr;
 }
 template <typename T>
 void Dlist<T>::CopyAll(const Dlist &l){
