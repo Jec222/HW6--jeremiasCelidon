@@ -133,27 +133,18 @@ T Dlist<T>::RemoveFront(){
   else{
     node *temp = first;
     first = first -> next;
-    first -> prev = NULL;
-    temp -> next = NULL;
+    first -> prev = nullptr;
+    temp -> next = nullptr;
     delete temp;
   }
 }
 template <typename T>
 T Dlist<T>::RemoveBack(){
-  if (last == NULL)
-    MakeEmpty();
-
-  if (first == last){
-    RemoveAll();
-    MakeEmpty();
-    //return;
-  }
-  else{
-    node *temp = last;
-    last = last -> prev;
-    last -> next = NULL;
-    temp -> prev = NULL;
-    delete temp;
+  if (first) {
+    Node *oldNode = last;
+    last = last->prev;
+    last->next = nullptr;
+    delete oldNode;
   }
 }
 template <typename T>
