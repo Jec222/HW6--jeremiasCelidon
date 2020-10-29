@@ -175,7 +175,7 @@ template <typename T>
 void Dlist<T>::RemoveAll(){
 
   node *temp = first;
-  while (temp! = nullptr) {
+  while (temp != nullptr) {
     first = first -> next;
     delete temp;
     temp = first;
