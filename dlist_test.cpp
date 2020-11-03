@@ -14,16 +14,14 @@ struct Record {
 
 int main() {
   Dlist<Record*> catsweb1; 
-  //CREATE RECORD 1
+
   Record* p1 = new Record;
-  p1->name = "Andrew1 DeOrio";
-  p1->uniqname = "awdeorio1";
+  p1->name = "Jeremias";
+  p1->uniqname = "testing";
   p1->job = FACULTY;
- //CREATE RECORD 2
 
   catsweb1.InsertFront(p1);
  
-  //testing Copy-constructor
   while ( !catsweb1.IsEmpty() ) {
     Record *r = catsweb1.RemoveFront();
     cout << r->uniqname << endl;
