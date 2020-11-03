@@ -2,158 +2,156 @@
 #include <string>
 #include "dlist.h"
 
-struct Caller {
+struct Costumer {
   int time_stamp;
   std::string name;
   std::string status;
-  int duration;
+  int tick;
 };
-// IMPLEMENT FUNCTION GETCALLERINFOR
-void GetCallersInfor (int &total_tick, int event_number, Dlist<Caller*> &caller_list) {
-   for (int i = 0; i < event_number; i++) {
-    Caller* new_caller = new Caller;
-    std::cin >> new_caller->time_stamp >> new_caller->name >> new_caller->status >> new_caller->duration;
-    caller_list.InsertBack(new_caller); 
-    //calculate total_tick;
-    if (total_tick == new_caller->time_stamp) {
-      total_tick = total_tick + new_caller->duration;
-    } else if (total_tick < new_caller->time_stamp){
-      total_tick = new_caller->time_stamp + new_caller->duration ;
-    } else {
-      total_tick += new_caller->duration;
-    }
+void CostumersData (int &, int , Dlist<Costumer*> &);
+void KeepTime(int , Dlist<Costumer*> &);
+void Add (Costumer* , Dlist<Costumer*> &);
+void List(int , Dlist<Costumer*> , Dlist<Costumer*> &);
+void Answer(int , Dlist<Costumer*> &);
+void Test (int ,Dlist<Costumer*> &,Dlist<Costumer*> &);
+
+int main() {
+  Dlist<Costumer*> call_list;
+  Dlist<Costumer*> answer_list;
+  int Costumer_tick = 0;
+  int event_number;
+  std::cin >> event_number;
+  CostumersData(Costumer_tick,event_number,call_list); 
+  List(event_number,call_list, answer_list);
+  Test(Costumer_tick, call_list, answer_list);
+}
+void CostumersData (int &Costumer_tick, int event_number, Dlist<Costumer*> &Costumer_list) {
+  for (int i = 0; i < event_number; i++) {
+
+    Costumer* new_Costumer = new Costumer;
+    std::cin >> new_Costumer->time_stamp >> new_Costumer->name >> new_Costumer->status >> new_Costumer->tick;
+    Costumer_list.InsertBack(new_Costumer); 
+
+    if (Costumer_tick == new_Costumer->time_stamp) 
+      Costumer_tick = Costumer_tick + new_Costumer->tick;
+
+    if (Costumer_tick < new_Costumer->time_stamp)
+      Costumer_tick = new_Costumer->time_stamp + new_Costumer->tick;
+
+    else 
+      Costumer_tick += new_Costumer->tick;
+
   }
 }
-// IMPLEMENT CallerAtCurrentTime
-void CallerAtCurrentTime(int curr_tick, Dlist<Caller*> &caller_list) {
-  try {
-    Caller* caller = caller_list.RemoveFront();
-  while (caller->time_stamp == curr_tick) {
-    if (caller->status == "none") {
-      std::cout<<"Call from "<<caller->name<<" a regular member\n"; 
-    } else {
-      std::cout<<"Call from "<<caller->name<<" a "<<caller->status<<" member\n"; 
-    }
-    caller = caller_list.RemoveFront();
+void KeepTime(int current, Dlist<Costumer*> &Costumer_list) {
+  
+  Costumer* Costumer = Costumer_list.RemoveFront();
+  
+  while (Costumer->time_stamp == current) {
+    
+    if (Costumer->status == "none") 
+      std::cout<<"Call from "<<Costumer->name<<" a regular member\n"; 
+    else 
+      std::cout<<"Call from "<<Costumer->name<<" a "<<Costumer->status<<" member\n"; 
+    
+    Costumer = Costumer_list.RemoveFront();
   }
-  caller_list.InsertFront(caller);
-  }
-  catch (emptyList) {
-  }
+  Costumer_list.InsertFront(Costumer);
 }
-//
-void AddCallerToAnwerList (Caller* curr, Dlist<Caller*> &answer_list) {
-  Caller* new_caller = new Caller;
-  new_caller->time_stamp = curr->time_stamp;
-  new_caller->name = curr->name;
-  new_caller->status = curr->status;
-  new_caller->duration = curr->duration;
-  answer_list.InsertBack(new_caller);
+void Add (Costumer* current, Dlist<Costumer*> &answer_list) {
+  Costumer* new_Costumer = new Costumer;
+  new_Costumer->time_stamp = current->time_stamp;
+  new_Costumer->name = current->name;
+  new_Costumer->status = current->status;
+  new_Costumer->tick = current->tick;
+  answer_list.InsertBack(new_Costumer);
 }
-// FUNCTION TO MAKE A LIST OF CALLER TO CALL BACK IN ORDER
-void MakeAnswerList(int event_number, Dlist<Caller*> caller_list, Dlist<Caller*> &answer_list) {
-  int ev = event_number;
-  //PLATIUM MEMBERS
+void List(int event_number, Dlist<Costumer*> Costumer_list, Dlist<Costumer*> &answer_list) {
+  int temp = event_number;
+  
   for  ( int i = 0 ; i < event_number; i++) {
-    Caller* curr = caller_list.RemoveFront();
-    if ( curr->status == "platium" ) {
-      AddCallerToAnwerList(curr,answer_list);
-      ev--;
+    Costumer* current = Costumer_list.RemoveFront();
+    if ( current->status == "platium" ) {
+      Add(current,answer_list);
+      temp--;
     } else {
-      caller_list.InsertBack(curr);
+      Costumer_list.InsertBack(current);
     }
   }
-  //GOLD MEMBERS
-  event_number = ev;
+  event_number = temp;
   for (int i = 0 ; i < event_number; i++) {
-    Caller* curr = caller_list.RemoveFront();
-    if ( curr->status == "gold" ) {
-      AddCallerToAnwerList(curr,answer_list);
-      ev--;
-    } else {
-      caller_list.InsertBack(curr);
+    Costumer* current = Costumer_list.RemoveFront();
+    if ( current->status == "gold" ) {
+      Add(current,answer_list);
+      temp--;
     }
+    else 
+      Costumer_list.InsertBack(current);
   }
-  //SILVER MEMBERS
-  event_number = ev;
+
+  event_number = temp;
   for (int i = 0 ; i < event_number; i++) {
-    Caller* curr = caller_list.RemoveFront();
-    if ( curr->status == "silver" ) {
-      AddCallerToAnwerList(curr,answer_list);
-      ev--;
+    Costumer* current = Costumer_list.RemoveFront();
+    if ( current->status == "silver" ) {
+      Add(current,answer_list);
+      temp--;
     } else {
-      caller_list.InsertBack(curr);
+      Costumer_list.InsertBack(current);
     }
   }
   //REGULAR MEMBERS
-  event_number = ev;
+  event_number = temp;
   for (int i = 0 ; i < event_number; i++) {
-    Caller* curr = caller_list.RemoveFront();
-    if ( curr->status == "none" ) {
-      AddCallerToAnwerList(curr,answer_list);
-      ev--;
-    } else {
-      caller_list.InsertBack(curr);
-    }
+    Costumer* current = Costumer_list.RemoveFront();
+    if ( current->status == "none" ) {
+      Add(current,answer_list);
+      temp--;
+    } else 
+        Costumer_list.InsertBack(current);
+    
   }
 }
+void Answer(int current, Dlist<Costumer*> &answer_list) {
 
-//FUNCTION TO INPUT CURRENT CALLS 
-void CurrAnswer(int curr_tick, Dlist<Caller*> &answer_list) {
-  try {
-    Caller* caller = answer_list.RemoveFront();
-    if (caller->time_stamp > curr_tick) {
-      CurrAnswer(curr_tick, answer_list);
-      try {
-        Caller* next_caller = answer_list.RemoveFront();
-        if (next_caller->status == "stillcalling") {
-          answer_list.InsertFront(caller); 
-          answer_list.InsertFront(next_caller); 
-        } else {
-          answer_list.InsertFront(next_caller); 
-          answer_list.InsertFront(caller); 
-        }
-      }
-      catch (emptyList){
-        answer_list.InsertFront(caller); 
+  Costumer* Costumer = answer_list.RemoveFront();
+    if (Costumer->time_stamp > current) {
+      Answer(current, answer_list);
+      
+      Costumer* next_Costumer = answer_list.RemoveFront();
+      if (next_Costumer->status == "stillcalling") {
+        answer_list.InsertFront(Costumer); 
+        answer_list.InsertFront(next_Costumer); 
+      } 
+      else{
+          answer_list.InsertFront(next_Costumer); 
+          answer_list.InsertFront(Costumer); 
       }  
-    } else {
-      if ( caller->duration == 1 && caller->status != "stillcalling") {
-        std::cout << "Answering call from " << caller->name<<"\n";
-        delete caller;
-      } else if ( caller->duration == 1 && caller->status == "stillcalling" ) {
-        delete caller;
-      } else if (caller->duration > 1 && caller->status == "stillcalling") {
-        caller->duration = caller->duration -1;
-        answer_list.InsertFront(caller);
-      } else {
-        std::cout << "Answering call from " << caller->name <<"\n"; 
-        caller->duration = caller->duration -1; 
-        caller->status = "stillcalling";
-        answer_list.InsertFront(caller);
+    } 
+    else {
+    
+      if ( Costumer->tick == 1 && Costumer->status != "stillcalling") {
+        std::cout << "Answering call from " << Costumer->name<<"\n";
+        delete Costumer;
+      }
+      if ( Costumer->tick == 1 && Costumer->status == "stillcalling" )
+        delete Costumer;
+      if (Costumer->tick > 1 && Costumer->status == "stillcalling") {
+        Costumer->tick = Costumer->tick -1;
+        answer_list.InsertFront(Costumer);
+      }
+      else {
+        std::cout << "Answering call from " << Costumer->name <<"\n"; 
+        Costumer->tick = Costumer->tick -1; 
+        Costumer->status = "stillcalling";
+        answer_list.InsertFront(Costumer);
       }
     } 
-  }
-  catch (emptyList) {
-  }
+
 }
-//// IMPLEMENT RunSimulator
-void RunSimulator (int rem_tick,Dlist<Caller*> &caller_list,Dlist<Caller*> &answer_list) {
+void Test (int rem_tick,Dlist<Costumer*> &Costumer_list,Dlist<Costumer*> &answer_list) {
   for (int i = 0; i <= rem_tick; i++) {
-    std::cout<< "Starting tick #" <<i <<"\n";
-    CallerAtCurrentTime(i,caller_list);
-    CurrAnswer(i,answer_list); 
+    std::cout<< "Starting tick #" <<i << std::endl;
+    KeepTime(i,Costumer_list);
+    Answer(i,answer_list); 
   }
-}
-int main() {
-  Dlist<Caller*> call_list;
-  Dlist<Caller*> answer_list;
-  int total_tick = 0;
-  //get event information
-  int event_number;
-  std::cin >> event_number;
-  //TEST THE CALL SIMULATOR
-  GetCallersInfor(total_tick,event_number,call_list); 
-  MakeAnswerList(event_number,call_list, answer_list);
-  RunSimulator(total_tick, call_list, answer_list);
 }
